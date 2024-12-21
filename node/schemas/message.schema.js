@@ -5,6 +5,7 @@ const messageSchema = new Schema({
     room: { type: mongoose.Schema.ObjectId, ref: "Room" },
     from: { type: mongoose.Schema.ObjectId, ref: "Account" },
     message: String,
+    activity: String,
     isDeleted: { type: Boolean, default: false },
 }, { timestamps: true })
 

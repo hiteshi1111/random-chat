@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from "react-router-dom";
-import { checkEmptyFields, validateMobile, validatePassword, validateUsername } from '../utils/validation';
+import { checkEmptyFields, validateMobile, validatePassword } from '../utils/validation';
 import { PostRequest } from '../utils/request';
 
 const Register = () => {
@@ -16,8 +16,6 @@ const Register = () => {
         setError("");
         if (checkEmptyFields(formInput)){
             setError("Fields must not be empty!");
-        }else if(!validateUsername(formInput.username)){
-            setError("Invalid username!");
         }else if(!validateMobile(formInput.mobile)){
             setError("Invalid mobile!");
         }else if(!validatePassword(formInput.password)){

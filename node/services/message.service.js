@@ -5,6 +5,7 @@ let service = {};
 
 service.createMessage = createMessage;
 service.getMessages = getMessages;
+service.createActivity = createActivity;
 
 // CREATES ACCOUNT
 async function createMessage(id, body) {
@@ -29,6 +30,25 @@ async function getMessages(roomId) {
             select: "username"
         });
         return messages;
+    }catch(error){
+        console.log("messages fetch error >", error);
+        return Promise.reject({
+            statusCode: 500,
+            message: "Message fetching failed!"
+        })
+    }
+}
+
+// CREATE ACTIVITY
+async function createActivity(id, roomId) {
+    try{
+        let body = {
+            from: new mongoose.Types.ObjectId(id),
+            room: new mongoose.Types.ObjectId(roomId),
+            activity: "joined the room"
+        };
+        const newMessage = await Message.create(body);
+        return newMessage;
     }catch(error){
         console.log("messages fetch error >", error);
         return Promise.reject({

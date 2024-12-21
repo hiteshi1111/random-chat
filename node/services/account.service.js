@@ -1,6 +1,7 @@
 const Account = require("../schemas/account.schema");
 const { passwordEncryption, passwordDecryption } = require("./password.service");
 const RoomService = require("./room.service");
+const MessageService = require("./message.service");
 
 let service = {};
 
@@ -27,7 +28,8 @@ async function createAccount(body) {
         body.password = passwordEncryption(body.password);
         body.isActive = true;
         const newUser = await Account.create(body)
-        await RoomService.checkAndAssignRoom(newUser._id)
+        const roomId = await RoomService.checkAndAssignRoom(newUser._id);
+        await MessageService.createActivity(newUser._id, roomId);
         return true;
     } catch (error) {
         console.log("create error >", error);

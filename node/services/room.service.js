@@ -17,15 +17,15 @@ async function checkAndAssignRoom(id) {
             const data = {
                 participants: [new mongoose.Types.ObjectId(id)]
             };
-            await Room.create(data);
-            return true;
+            const newRoom = await Room.create(data);
+            return newRoom._id;
         } else {
-            await Room.findByIdAndUpdate(
+            const room = await Room.findByIdAndUpdate(
                 emptyRoom._id,
                 { $addToSet: { participants: new mongoose.Types.ObjectId(id) } },
                 { new: true }
             );
-            return true;
+            return room._id;
         }
     } catch (error) {
         console.log("Error assigning room >", error);

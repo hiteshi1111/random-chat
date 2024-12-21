@@ -4,7 +4,7 @@ import { formatTime } from '../utils/formatTime';
 const Message = (props) => {
     return (
         props.activity ? (
-            <p className='text-center text-[#aaa] text-[12px] py-[10px]'>{props.username} {props.activity}</p>
+            <p className='text-center text-[#aaa] text-[12px] py-[10px]'>{props.from?.username} {props.activity}</p>
         ):(
             <div className='text-white text-[14px]'>
                 <span className='font-semibold text-[#aaa]'>{props.from?.username}</span>{" "}
