@@ -1,17 +1,26 @@
 import React from 'react'
-import { formatTime } from '../utils/formatTime';
+import { formatTimestamp } from '../utils/formatTime';
+import Timestamp from './timestamp';
 
-const Message = (props) => {
+const Message = ({previousMessage, ...props}) => {
+    const isSameDay = (message1, message2) => {
+        return formatTimestamp(message1?.createdAt, "day") === formatTimestamp(message2?.createdAt, "day");
+    };
     return (
-        props.activity ? (
+        <>
+        {(!isSameDay(props, previousMessage)) && (
+            <Timestamp date={props?.createdAt} />
+        )}
+        {props.activity ? (
             <p className='text-center text-[#aaa] text-[12px] py-[10px]'>{props.from?.username} {props.activity}</p>
         ):(
             <div className='text-white text-[14px]'>
                 <span className='font-semibold text-[#aaa]'>{props.from?.username}</span>{" "}
-                <span className='text-[#aaa]'>({formatTime(props.createdAt, "time")})</span>{": "}
+                <span className='text-[#aaa]'>({formatTimestamp(props.createdAt, "time")})</span>{": "}
                 <div className='pl-[5px]'>~ {props.message}</div>
             </div>
-        )
+        )}
+        </>
     )
 }
 

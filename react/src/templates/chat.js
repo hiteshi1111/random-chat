@@ -34,7 +34,7 @@ const Chat = () => {
                 <div className='px-[30px] h-[calc(100vh_-_110px)] overflow-hidden overflow-y-auto pb-[10px]'>
                     {allMessages.length > 0 ? (
                         allMessages.map((msg, i) => (
-                            <Message {...msg} key={i} />
+                            <Message {...msg} key={i} previousMessage={allMessages[i - 1]} />
                         ))
                     ):(
                         <p className='text-center px-[30px] py-[70px] text-[#aaa]'>No Conversation!</p>
