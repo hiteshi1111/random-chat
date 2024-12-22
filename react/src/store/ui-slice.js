@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    loading: false
+    loading: false,
+    error: false
 }
 
 const uiSlice = createSlice({
@@ -10,6 +11,9 @@ const uiSlice = createSlice({
     reducers: {
         setLoading(state, action){
             state.loading = action.payload;
+        },
+        setError(state, action){
+            state.error = action.payload;
         }
     }
 });
