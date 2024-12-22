@@ -28,7 +28,7 @@ const Home = () => {
 
     return (
         <div className='w-full'>
-            <div className='max-w-[500px] m-auto px-[10px] md:px-[30px] border py-[30px] my-[60px]'>
+            <div className='max-w-[500px] mx-auto px-[20px] md:px-[30px] md:border py-[60px] my-[60px]'>
                 {error && (
                     <p className='text-white text-[12px] mb-[5px]'>{error}</p>
                 )}
