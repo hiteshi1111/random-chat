@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react'
-import Message from '../components/message';
+import React, { useEffect } from 'react'
 import { GetRequest, PostRequest } from '../utils/request';
 import { useDispatch, useSelector } from 'react-redux';
 import { chatActions } from '../store/chat-slice';
+import SingleMessage from '../components/singleMessage';
 
 const Chat = () => {
     const dispatch = useDispatch();
@@ -17,6 +17,7 @@ const Chat = () => {
                 console.log("message fetching error >", error);
             })
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[accountId])
 
     function sendMessageHandler(){
@@ -36,7 +37,7 @@ const Chat = () => {
                     {allMessages.length > 0 ? (
                         <>
                         {allMessages.map((msg, i) => (
-                            <Message {...msg} key={i} previousMessage={allMessages[i - 1]} />
+                            <SingleMessage {...msg} key={i} previousMessage={allMessages[i - 1]} />
                         ))}
                         </>
                     ):(

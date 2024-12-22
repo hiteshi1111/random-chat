@@ -2,7 +2,7 @@ import React from 'react'
 import { formatTimestamp } from '../utils/formatTime';
 import Timestamp from './timestamp';
 
-const Message = ({previousMessage, ...props}) => {
+const SingleMessage = ({previousMessage, ...props}) => {
     const isSameDay = (message1, message2) => {
         return formatTimestamp(message1?.createdAt, "day") === formatTimestamp(message2?.createdAt, "day");
     };
@@ -24,4 +24,4 @@ const Message = ({previousMessage, ...props}) => {
     )
 }
 
-export default Message;
+export default SingleMessage;
