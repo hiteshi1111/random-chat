@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import Message from '../components/message';
 import { GetRequest, PostRequest } from '../utils/request';
+import { useDispatch, useSelector } from 'react-redux';
+import { chatActions } from '../store/chat-slice';
 
 const Chat = () => {
-    const [allMessages, setAllMessages] = useState([]);
-    const [inputMessage, setInputMessage] = useState("");
-
+    const dispatch = useDispatch();
+    const { messageInput, allMessages } = useSelector(state => state.chat)
     const accountId = localStorage.getItem("xiu");
 
     useEffect(() => {
         if (accountId){
             GetRequest(process.env.REACT_APP_ENDPOINT_URL + "message/" + accountId).then(response => {
-                setAllMessages(response.data);
+                dispatch(chatActions.setAllMessages(response.data));
             }).catch(error => {
                 console.log("message fetching error >", error);
             })
@@ -20,9 +21,9 @@ const Chat = () => {
 
     function sendMessageHandler(){
         PostRequest(process.env.REACT_APP_ENDPOINT_URL + "message/" + accountId, { 
-            message: inputMessage
+            message: messageInput?.trim()
         }).then(response => {
-            console.log("sent", response.data)
+            console.log("sent", response.data);
         }).catch(error => {
             console.log("message sending error >", error);
         })
@@ -33,23 +34,25 @@ const Chat = () => {
             <div className='relative max-w-[500px] mx-auto border py-[30px] h-[100vh]'>
                 <div className='px-[30px] h-[calc(100vh_-_110px)] overflow-hidden overflow-y-auto pb-[10px]'>
                     {allMessages.length > 0 ? (
-                        allMessages.map((msg, i) => (
+                        <>
+                        {allMessages.map((msg, i) => (
                             <Message {...msg} key={i} previousMessage={allMessages[i - 1]} />
-                        ))
+                        ))}
+                        </>
                     ):(
                         <p className='text-center px-[30px] py-[70px] text-[#aaa]'>No Conversation!</p>
                     )}
                 </div>
                 <div className='absolute bottom-0 left-0 flex w-full p-[15px]'>
                     <input 
-                        value={inputMessage}
+                        value={messageInput}
                         placeholder='Type your message here...'
-                        onChange={(e) => setInputMessage(e.target.value)}
+                        onChange={(e) => dispatch(chatActions.setMessageInput(e.target.value)) }
                         className='border h-[50px] px-[10px]'
                     />
                     <button 
                         onClick={sendMessageHandler}
-                        disabled={inputMessage.length === 0} 
+                        disabled={messageInput.length === 0} 
                         className='max-w-[50px] text-[25px]'
                     >{">"}</button>
                 </div>
