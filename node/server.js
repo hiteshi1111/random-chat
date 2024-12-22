@@ -18,7 +18,7 @@ mongoose.connect(process.env.MONGO_URI, {
 }).catch(error => console.log("Unable to connect to DB! " + error));
 
 app.get("/", (req, res) => {
-    res.send("Welcome to Well Wisher Servers!");
+    res.send("Lingo 서버에 오신 것을 환영합니다!");
 })
 
 // ACCOUNT CONTROLLERS
@@ -26,7 +26,7 @@ app.use("/api/account", require("./controllers/account.controller"));
 app.use("/api/message", require("./controllers/message.controller"));
 
 app.all("*", function (req, res) {
-    res.status(404).send("Well Wisher Servers!");
+    res.status(404).send("링고에서 찾을 수 없습니다!");
 });
 
 const server = app.listen(process.env.PORT, process.env.IP, () => {

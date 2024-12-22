@@ -24,6 +24,7 @@ const Chat = () => {
         PostRequest(process.env.REACT_APP_ENDPOINT_URL + "message/" + accountId, { 
             message: messageInput?.trim()
         }).then(response => {
+            dispatch(chatActions.setMessageInput(""))
             console.log("sent", response.data);
         }).catch(error => {
             console.log("message sending error >", error);
@@ -53,7 +54,7 @@ const Chat = () => {
                     />
                     <button 
                         onClick={sendMessageHandler}
-                        disabled={messageInput.length === 0} 
+                        disabled={messageInput.trim().length === 0} 
                         className='max-w-[50px] text-[25px]'
                     >{">"}</button>
                 </div>
