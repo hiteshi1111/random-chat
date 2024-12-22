@@ -3,6 +3,8 @@ import { GetRequest, PostRequest } from '../utils/request';
 import { useDispatch, useSelector } from 'react-redux';
 import { chatActions } from '../store/chat-slice';
 import SingleMessage from '../components/singleMessage';
+import Loader from '../components/loader';
+import { uiActions } from '../store/ui-slice';
 
 const Chat = () => {
     const dispatch = useDispatch();
@@ -10,11 +12,14 @@ const Chat = () => {
     const accountId = localStorage.getItem("xiu");
 
     useEffect(() => {
+        dispatch(uiActions.setLoading(true));
         if (accountId){
             GetRequest(process.env.REACT_APP_ENDPOINT_URL + "message/" + accountId).then(response => {
                 dispatch(chatActions.setAllMessages(response.data));
+                dispatch(uiActions.setLoading(false));
             }).catch(error => {
                 console.log("message fetching error >", error);
+                dispatch(uiActions.setLoading(false));
             })
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -34,6 +39,7 @@ const Chat = () => {
     return (
         <div className='w-full h-[100vh] overflow-hidden'>
             <div className='relative max-w-[500px] mx-auto border py-[30px] h-[100vh]'>
+                <Loader />
                 <div className='px-[30px] h-[calc(100vh_-_110px)] overflow-hidden overflow-y-auto pb-[10px]'>
                     {allMessages.length > 0 ? (
                         <>
@@ -42,7 +48,7 @@ const Chat = () => {
                         ))}
                         </>
                     ):(
-                        <p className='text-center px-[30px] py-[70px] text-[#aaa]'>No Conversation!</p>
+                        <p className='text-center px-[30px] py-[30px] text-[#aaa] h-[70vh] flex flex-col justify-center items-center'>No Conversation!</p>
                     )}
                 </div>
                 <div className='absolute bottom-0 left-0 flex w-full p-[15px]'>
