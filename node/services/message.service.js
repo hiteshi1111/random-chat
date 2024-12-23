@@ -11,7 +11,10 @@ service.createActivity = createActivity;
 async function createMessage(id, body) {
     try {
         body.from = new mongoose.Types.ObjectId(id);
-        const newMessage = await Message.create(body);
+        const newMessage = (await Message.create(body)).populate({
+            path: "from",
+            select: "username"
+        });
         return newMessage;
     } catch (error) {
         console.log("create error >", error);

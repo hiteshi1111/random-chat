@@ -1,14 +1,16 @@
-import React, { useEffect } from 'react'
-import { GetRequest, PostRequest } from '../utils/request';
+import React, { useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
+import { BiSolidSend } from "react-icons/bi";
+import { GetRequest, PostRequest } from '../utils/request';
 import { chatActions } from '../store/chat-slice';
 import SingleMessage from '../components/singleMessage';
 import { uiActions } from '../store/ui-slice';
 import Layout from '../components/layout';
 
 const Chat = () => {
+    const chatRef = useRef();
     const dispatch = useDispatch();
-    const { messageInput, allMessages } = useSelector(state => state.chat)
+    const { message, allMessages, realTimeMessages } = useSelector(state => state.chat)
     const accountId = localStorage.getItem("xiu");
 
     useEffect(() => {
@@ -28,22 +30,33 @@ const Chat = () => {
 
     function sendMessageHandler(){
         PostRequest(process.env.REACT_APP_ENDPOINT_URL + "message/" + accountId, { 
-            message: messageInput?.trim()
+            message: message?.trim()
         }).then(response => {
-            dispatch(chatActions.setMessageInput(""))
-            console.log("sent", response.data);
+            dispatch(chatActions.setMessage(""))
+            dispatch(chatActions.setRealTimeMessages([...realTimeMessages, response.data]));
+            chatRef.current.scrollIntoView({ behavior: "smooth" });
         }).catch(error => {
             console.log("message sending error >", error);
         })
     }
 
+    const handleKeyDown = (event) => {        
+        if (event.keyCode === 13 && !event.shiftKey) {
+            event.preventDefault();
+            sendMessageHandler();
+        }
+    };
+
     return (
-        <Layout className='!px-0 !md:px-0 py-[30px] h-[100vh] border' upperClassName='h-[100vh] overflow-hidden'>
-            <div className='px-[30px] h-[calc(100vh_-_110px)] overflow-hidden overflow-y-auto pb-[10px]'>
+        <Layout className='!px-0 !md:px-0 py-[30px] border'>
+            <div ref={chatRef} className='px-[30px] h-[calc(100vh_-_110px)] overflow-hidden overflow-y-auto pb-[10px]'>
                 {allMessages.length > 0 ? (
                     <>
                     {allMessages.map((msg, i) => (
                         <SingleMessage {...msg} key={i} previousMessage={allMessages[i - 1]} />
+                    ))}
+                    {realTimeMessages.map((msg, i) => (
+                        <SingleMessage {...msg} key={i} previousMessage={realTimeMessages[i - 1]} />
                     ))}
                     </>
                 ):(
@@ -52,16 +65,17 @@ const Chat = () => {
             </div>
             <div className='absolute bottom-0 left-0 flex w-full p-[15px]'>
                 <input 
-                    value={messageInput}
+                    value={message}
                     placeholder='Type your message here...'
-                    onChange={(e) => dispatch(chatActions.setMessageInput(e.target.value)) }
+                    onChange={(e) => dispatch(chatActions.setMessage(e.target.value)) }
                     className='border h-[50px] px-[10px]'
+                    onKeyDown={handleKeyDown}
                 />
                 <button 
                     onClick={sendMessageHandler}
-                    disabled={messageInput.trim().length === 0} 
-                    className='max-w-[50px] text-[25px]'
-                >{">"}</button>
+                    disabled={message.trim().length === 0} 
+                    className='max-w-[50px] flex justify-center items-center'
+                > <BiSolidSend size={25} className='-rotate-90' /> </button>
             </div>
         </Layout>
     )

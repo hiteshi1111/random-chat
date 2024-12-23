@@ -38,8 +38,8 @@ code {
 
 .loader {
   position: relative;
-  width: 100px;
-  height: 100px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
   background: linear-gradient(#14ffe9, #ffeb3b, #ff00e0);
   animation: animate 0.5s linear infinite;

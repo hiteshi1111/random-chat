@@ -11,7 +11,6 @@ const Loader = () => {
                 <span></span>
                 <span></span>
             </div>
-            <p className='text-[#aaa] mt-[30px] animate-pulse'>Loading...</p>
         </div>
     )
 }

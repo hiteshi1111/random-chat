@@ -2,7 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     allMessages: [],
-    messageInput: "",
+    realTimeMessages: [],
+    message: "",
     triggerChat: 0
 }
 
@@ -13,8 +14,11 @@ const chatSlice = createSlice({
         setAllMessages(state, action){
             state.allMessages = action.payload;
         },
-        setMessageInput(state, action){
-            state.messageInput = action.payload;
+        setMessage(state, action){
+            state.message = action.payload;
+        },
+        setRealTimeMessages(state, action){
+            state.realTimeMessages = action.payload;
         },
         setTriggerChat(state, action){
             state.triggerChat = action.payload;
