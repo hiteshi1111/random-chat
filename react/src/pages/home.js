@@ -24,8 +24,7 @@ const Home = () => {
         }else{
             PostRequest(process.env.REACT_APP_ENDPOINT_URL + "account/login", formInput).then(response => {
                 localStorage.setItem("xiu", response.data)
-                navigate("/chat")
-                dispatch(uiActions.setLoading(false));
+                navigate("/chat");
             }).catch(error => {
                 console.log("login error >", error);
                 setError(error?.data || "Something went wrong!");

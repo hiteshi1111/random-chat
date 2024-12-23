@@ -1,15 +1,18 @@
 import React, { useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from "react-router-dom";
 import { BiSolidSend } from "react-icons/bi";
 import { GetRequest, PostRequest } from '../utils/request';
 import { chatActions } from '../store/chat-slice';
 import SingleMessage from '../components/singleMessage';
 import { uiActions } from '../store/ui-slice';
 import Layout from '../components/layout';
+import { AiOutlineLogout } from 'react-icons/ai';
 
 const Chat = () => {
     const chatRef = useRef();
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const { message, allMessages, realTimeMessages } = useSelector(state => state.chat)
     const accountId = localStorage.getItem("xiu");
 
@@ -49,6 +52,15 @@ const Chat = () => {
 
     return (
         <Layout className='!px-0 !md:px-0 py-[30px] border'>
+            <AiOutlineLogout
+                color='#fff' 
+                size={20} 
+                onClick={() => {
+                    localStorage.removeItem("xiu");
+                    navigate("/")
+                }}
+                className='absolute right-[10px] top-[10px]'
+            />
             <div ref={chatRef} className='px-[30px] h-[calc(100vh_-_110px)] overflow-hidden overflow-y-auto pb-[10px]'>
                 {allMessages.length > 0 ? (
                     <>
