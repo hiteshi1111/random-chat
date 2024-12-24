@@ -2,7 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     loading: false,
-    error: false
+    error: false,
+    emojiKeypad: false
 }
 
 const uiSlice = createSlice({
@@ -14,6 +15,9 @@ const uiSlice = createSlice({
         },
         setError(state, action){
             state.error = action.payload;
+        },
+        setEmojiKeypad(state, action){
+            state.emojiKeypad = action.payload;
         }
     }
 });

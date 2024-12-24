@@ -8,12 +8,16 @@ import SingleMessage from '../components/singleMessage';
 import { uiActions } from '../store/ui-slice';
 import Layout from '../components/layout';
 import { AiOutlineLogout } from 'react-icons/ai';
+import { RiBearSmileFill } from "react-icons/ri";
+import EmojiKeypad from '../components/emojiKeypad';
 
 const Chat = () => {
-    const chatRef = useRef();
+    const inputRef = useRef(null);
+    const chatRef = useRef(null);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { message, allMessages, realTimeMessages } = useSelector(state => state.chat)
+    const { message, allMessages, realTimeMessages } = useSelector(state => state.chat);
+    const { emojiKeypad } = useSelector(state => state.ui);
     const accountId = localStorage.getItem("xiu");
 
     useEffect(() => {
@@ -59,7 +63,7 @@ const Chat = () => {
                     localStorage.removeItem("xiu");
                     navigate("/")
                 }}
-                className='absolute right-[10px] top-[10px]'
+                className='absolute right-[10px] top-[10px] cursor-pointer'
             />
             <div ref={chatRef} className='px-[30px] h-[calc(100vh_-_110px)] overflow-hidden overflow-y-auto pb-[10px]'>
                 {allMessages.length > 0 ? (
@@ -75,14 +79,24 @@ const Chat = () => {
                     <p className='text-center px-[30px] py-[30px] text-[#aaa] h-[70vh] flex flex-col justify-center items-center'>No Conversation!</p>
                 )}
             </div>
-            <div className='absolute bottom-0 left-0 flex w-full p-[15px]'>
-                <input 
-                    value={message}
-                    placeholder='Type your message here...'
-                    onChange={(e) => dispatch(chatActions.setMessage(e.target.value)) }
-                    className='border h-[50px] px-[10px]'
-                    onKeyDown={handleKeyDown}
-                />
+            <div className='absolute bottom-0 left-0 flex w-full p-[15px] z-[9999] bg-black'>
+                <EmojiKeypad inputTop={inputRef} />
+                <div className='flex border items-center w-full px-[10px]'>
+                    <RiBearSmileFill 
+                        color='#fff' 
+                        size={20}
+                        className="cursor-pointer"
+                        onClick={() => dispatch(uiActions.setEmojiKeypad(!emojiKeypad))}
+                    />
+                    <input 
+                        ref={inputRef}
+                        value={message}
+                        placeholder='Type your message here...'
+                        onChange={(e) => dispatch(chatActions.setMessage(e.target.value)) }
+                        className="border h-[48px] px-[10px] border-none outline-none"
+                        onKeyDown={handleKeyDown}
+                    />
+                </div>
                 <button 
                     onClick={sendMessageHandler}
                     disabled={message.trim().length === 0} 
