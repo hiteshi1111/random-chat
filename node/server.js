@@ -29,6 +29,6 @@ app.all("*", function (req, res) {
     res.status(404).send("링고에서 찾을 수 없습니다!");
 });
 
-const server = app.listen(process.env.PORT, process.env.IP, () => {
+const server = app.listen(process.env.PORT, () => {
     console.log(`Server started at ${process.env.PORT}!`);
 })

@@ -50,7 +50,7 @@ const Register = () => {
     return (
         <Layout className='flex flex-col justify-center items-center'>
             {error && (
-                <p className='text-white text-[12px] mb-[5px]'>{error}</p>
+                <div className='text-white text-[12px] mb-[5px] text-left w-full'>{error}</div>
             )}
             <input
                 placeholder='Username'
@@ -89,7 +89,7 @@ const Register = () => {
             <button onClick={registrationHandler} className='mt-[30px]'>
                 Register
             </button>
-            <p className='mt-[10px] text-[14px] text-white'>Already have an account?{" "} 
+            <p className='mt-[10px] text-[14px] text-white text-left w-full'>Already have an account?{" "} 
                 <Link 
                     to="/" 
                     className='hover:underline'

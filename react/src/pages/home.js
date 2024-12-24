@@ -43,7 +43,7 @@ const Home = () => {
     return (
         <Layout className='flex flex-col justify-center items-center'>
             {error && (
-                <p className='text-white text-[12px] mb-[5px]'>{error}</p>
+                <div className='text-white text-[12px] mb-[5px] text-left w-full'>{error}</div>
             )}
             <input
                 placeholder='Username'
@@ -71,12 +71,12 @@ const Home = () => {
             <button onClick={loginHandler} className='mt-[30px]'>
                 Login
             </button>
-            <p className='mt-[10px] text-[14px] text-white'>Don't have an account?{" "} 
+            <div className='mt-[10px] text-[14px] text-white text-left w-full'>Don't have an account?{" "} 
                 <Link 
                     to="/register" 
                     className='hover:underline'
                 >Create Account!</Link>
-            </p>
+            </div>
         </Layout>
     )
 }
