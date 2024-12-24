@@ -79,29 +79,31 @@ const Chat = () => {
                     <p className='text-center px-[30px] py-[30px] text-[#aaa] h-[70vh] flex flex-col justify-center items-center'>No Conversation!</p>
                 )}
             </div>
-            <div className='absolute bottom-0 left-0 flex w-full p-[15px] z-[9999] bg-black'>
+            <div className='absolute bottom-0 left-0 flex flex-col w-full p-[15px] z-[9999] bg-black'>
                 <EmojiKeypad inputTop={inputRef} />
-                <div className='flex border items-center w-full px-[10px]'>
-                    <RiBearSmileFill 
-                        color='#fff' 
-                        size={20}
-                        className="cursor-pointer"
-                        onClick={() => dispatch(uiActions.setEmojiKeypad(!emojiKeypad))}
-                    />
-                    <input 
-                        ref={inputRef}
-                        value={message}
-                        placeholder='Type your message here...'
-                        onChange={(e) => dispatch(chatActions.setMessage(e.target.value)) }
-                        className="border h-[48px] px-[10px] border-none outline-none"
-                        onKeyDown={handleKeyDown}
-                    />
+                <div className='flex w-full'>
+                    <div className='flex border items-center w-full px-[10px]'>
+                        <RiBearSmileFill 
+                            color='#fff' 
+                            size={20}
+                            className="cursor-pointer"
+                            onClick={() => dispatch(uiActions.setEmojiKeypad(!emojiKeypad))}
+                        />
+                        <input 
+                            ref={inputRef}
+                            value={message}
+                            placeholder='Type your message here...'
+                            onChange={(e) => dispatch(chatActions.setMessage(e.target.value)) }
+                            className="border h-[48px] px-[10px] border-none outline-none"
+                            onKeyDown={handleKeyDown}
+                        />
+                    </div>
+                    <button 
+                        onClick={sendMessageHandler}
+                        disabled={message.trim().length === 0} 
+                        className='max-w-[50px] flex justify-center items-center'
+                    > <BiSolidSend size={25} className='-rotate-90' /> </button>
                 </div>
-                <button 
-                    onClick={sendMessageHandler}
-                    disabled={message.trim().length === 0} 
-                    className='max-w-[50px] flex justify-center items-center'
-                > <BiSolidSend size={25} className='-rotate-90' /> </button>
             </div>
         </Layout>
     )

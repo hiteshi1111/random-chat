@@ -11,12 +11,12 @@ const Error = () => {
                     {'>'} Connecting to your chat room.<br/>
                     {'>'} GET / http/1.1<br/>
                     {'>'} Host: lingo.com<br/>
-                    {'>'} HTTP/1.1 500 Internal Server Error<span class="cursor">_</span>
+                    {'>'} HTTP/1.1 500 Internal Server Error<span className="cursor">_</span>
                     <br/>
                     <br/>
                     Try reloading the page...
                 </code>
-                <div class="overlay"></div>
+                <div className="overlay"></div>
             </div>
         </div>
     )
