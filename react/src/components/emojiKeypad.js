@@ -23,11 +23,10 @@ const EmojiKeypad = () => {
     }
 
     return (
-        <div
-            className={`w-full max-w-[483px] h-[300px] bg-black border ${emojiKeypad ? "block" : "hidden"}`}
-        >
+        <div className={`w-full max-w-[483px] h-[300px] bg-black border ${emojiKeypad ? "block" : "hidden"}`} >
             <div className='flex justify-end p-[5px]'>
                 <IoClose 
+                    title="Close"
                     size={20} 
                     color='#fff' 
                     className='cursor-pointer' 
@@ -37,8 +36,8 @@ const EmojiKeypad = () => {
             <div className='px-[10px] py-[5px] grid grid-cols-2 gap-[10px] overflow-hidden overflow-y-auto h-[260px]'>
                 {emojiData.map((emoji, i) => (
                     <button 
-                        key={i} 
-                        className='text-[16px] md:text-[20px] text-white border px-[5px] md:px-[10px] py-[5px] bg-transparent'
+                        key={i}
+                        className='text-[14px] sm:text-[18px] md:text-[20px] text-white border px-[5px] md:px-[10px] py-[5px] bg-[#271d20]'
                         onClick={() => {
                             sendMessageHandler(emoji);
                             dispatch(uiActions.setEmojiKeypad(false));

@@ -57,6 +57,7 @@ const Chat = () => {
     return (
         <Layout className='!px-0 !md:px-0 py-[30px] border'>
             <AiOutlineLogout
+                title="Logout"
                 color='#fff' 
                 size={20} 
                 onClick={() => {
@@ -84,6 +85,7 @@ const Chat = () => {
                 <div className='flex w-full'>
                     <div className='flex border items-center w-full px-[10px]'>
                         <RiBearSmileFill 
+                            title="Emoticon"
                             color='#fff' 
                             size={20}
                             className="cursor-pointer"
@@ -99,6 +101,7 @@ const Chat = () => {
                         />
                     </div>
                     <button 
+                        title="Send"
                         onClick={sendMessageHandler}
                         disabled={message.trim().length === 0} 
                         className='max-w-[50px] flex justify-center items-center'
